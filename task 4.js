@@ -15,11 +15,21 @@ function palindrom(txt) {
 function palindrome1(txt){
     let len = txt.length;
     for(let i = 0; i < len/2; i++){
-        return txt[i] === txt[len-1-i]
-    }
+        if (txt[i] !== txt[len-1-i]){
+            return false
+        }
+    } return true
 }
 
-// console.log(palindrome1('annna'))
+function palindrome2(txt){
+    let reversed = '';
+    for(let i = txt.length - 1; i >= 0; i--){
+        reversed += txt[i];
+    }
+    return txt === reversed;
+}
+
+// console.log(palindrome2('annna'))
 //==========================================================================
 //Task 2
 
@@ -30,6 +40,28 @@ function palindrome1(txt){
 'worsdorw' -> 's' 
 'worsdorws'-> 'd'
 */
+
+// function checkChar(txt){
+//     for(let el of txt){
+//         if(txt.indexOf(el) === txt.lastIndexOf(el)){
+//             return el
+//         }
+//     }
+//     return 'character not found'
+// }
+
+// 2 ხერხი
+
+function checkChar1(txt){
+    for(let el of txt){
+        let foundElIndex = txt.indexOf(el);
+        if(txt.indexOf(el, foundElIndex + 1) === -1){
+            return el
+        }
+    }
+}
+
+// console.log(checkChar1('cbcbdde'))
 
 //==========================================================================
 /*
@@ -42,13 +74,27 @@ camelize("sad midis Matarebeli") -> "sadMidisMatarebeli"
 //     return txt.replaceAll(' ','')
 // }
 
+function firstToUpper(word){
+    return word[0].toUpperCase() + word.substring(1).toLowerCase()
+}
+
+// function camelize(txt){
+//     let arr = txt.split(' ');
+//     let camelizedTxt = '';
+//     arr.forEach((el,index) => {
+//         camelizedTxt += index === 0 ? el : firstToUpper(el)
+//     })
+//     return camelizedTxt;
+// }
+
+// მეორე ხერხი
+
 function camelize(txt){
-    let arr = txt.split(' ')
-    let word = []
-    for(let el of arr){
-        word.push(el[0].toUpperCase() + el.substring(1).toLowerCase())
-    }
-    return word.join('')
+    let arr = txt.split(' ');
+    return arr.reduce((acc,cur) => {
+        acc +=  firstToUpper(cur);
+        return acc
+    })
 }
 
 // console.log(camelize("sad midis Matarebeli"))
@@ -71,9 +117,13 @@ let arr1=[3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];
 function count(array){
     let arrchars = array.reduce((acc, cur) => {
         acc[cur] ? acc[cur]++ : acc[cur] = 1
+        if(acc[cur] > acc.maxVal.value){
+            acc.maxVal.value = acc[cur];
+            acc.maxVal.el = cur
+        }
         return acc
-    },{})
-    return arrchars
+    },{maxVal : {value : 0, el: ''}})
+    return arrchars.maxVal;
 }
 
 // console.log(count(arr1)) 
@@ -113,11 +163,45 @@ Task 5 :
 //   ])
 // );
 
+let persons = [
+    {
+      name: "Angelina Jolie",
+      age: 80,
+    },
+    {
+      name: "Eric Jones",
+      age: 2,
+    },
+    {
+      name: "Paris Hilton",
+      age: 5,
+    },
+    {
+      name: "Kayne West",
+      age: 16,
+    },
+    {
+      name: "Bob Ziroll",
+      age: 100,
+    },
+  ]
+
 // ["<h1>Angelina Jolie</h1><h2>80</h2>",
 // "<h1>Eric Jones</h1><h2>2</h2>",
 // "<h1>Paris Hilton</h1><h2>5</h2>",
 // "<h1>Kayne West</h1><h2>16</h2>",
 // "<h1>Bob Ziroll</h1><h2>100</h2>"]
+
+
+function readyToPutInTheDOM(arr){
+    let res = [];
+    arr.forEach((el) => {
+        res.push(`<h1>${el.name}</h1><h2>${el.age}</h2>`)
+    })
+    return res;
+}
+
+// console.log(readyToPutInTheDOM(persons))
 
 //==========================================================================
 //Task 6
@@ -144,8 +228,29 @@ Task 5 :
 []  -->  0
 # ცარიელია
 
-
 */
+
+function checkSequence(nums){
+    let normSeq = 0;
+    let resSeq = 0;
+    nums.forEach((el) => {
+        if(el === 0){
+            normSeq += 1
+        } else {
+            if( normSeq > 3){
+                resSeq += 1
+            }
+            normSeq = 0
+        }
+    })
+    return normSeq > 3 ? resSeq + 1 : resSeq
+}
+
+// console.log(checkSequence([0, 0, 0, 0, 1, 0, 0, 0, 0])) // 2
+// console.log(checkSequence([0, 1, 0, 0, 1, 0, 0, 0, 0])) // 1
+// console.log(checkSequence([0, 0, 1, 0, 1, 0, 0, 0, 1])) // 0
+// console.log(checkSequence([0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ,0])) // 2
+
 
 //==========================================================================
 //Task 7
@@ -190,4 +295,4 @@ function sumOfDigits(n){
 
 //==========================================================================
 //Task 8
-//დაწერეთ TO-DO List , input ველით  
+//დაწერეთ TO-DO List , input ველით  და ღილაკით ,რომელზე დაჭერის შემთვევაში სიაში დაემატება todo-list item
