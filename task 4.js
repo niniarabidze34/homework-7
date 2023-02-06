@@ -193,13 +193,30 @@ let persons = [
 // "<h1>Bob Ziroll</h1><h2>100</h2>"]
 
 
+// function readyToPutInTheDOM(arr){
+//     let res = [];
+//     arr.forEach((el) => {
+//         res.push(`<h1>${el.name}</h1><h2>${el.age}</h2>`)
+//     })
+//     return res;
+// }
+
 function readyToPutInTheDOM(arr){
-    let res = [];
-    arr.forEach((el) => {
-        res.push(`<h1>${el.name}</h1><h2>${el.age}</h2>`)
+    return arr.map((usr) => {
+        return (`<h1>${usr.name}</h1><h2>${usr.age}</h2>`)
     })
-    return res;
 }
+
+// function readyToPutInTheDOM(arr){
+//     return arr.map((usr) => {
+//         const h1 = document.createElement('h1');
+//         h1.innerText = usr.name;
+//         const h2 = document.createElement('h2');
+//         h2.innerText = usr.age;
+//         return h1.outerHTML + h2.outerHTML
+//     })
+// }
+
 
 // console.log(readyToPutInTheDOM(persons))
 
@@ -243,7 +260,7 @@ function checkSequence(nums){
             normSeq = 0
         }
     })
-    return normSeq > 3 ? resSeq + 1 : resSeq
+    return normSeq > 3 ? resSeq + 1 : resSeq;
 }
 
 // console.log(checkSequence([0, 0, 0, 0, 1, 0, 0, 0, 0])) // 2
